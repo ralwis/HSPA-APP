@@ -4267,11 +4267,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Projects\\HSPA\\WebAPI\\WebAPI.csproj",
+      "projectUniqueName": "E:\\Projects\\HSPA App\\WebAPI\\WebAPI.csproj",
       "projectName": "WebAPI",
-      "projectPath": "E:\\Projects\\HSPA\\WebAPI\\WebAPI.csproj",
+      "projectPath": "E:\\Projects\\HSPA App\\WebAPI\\WebAPI.csproj",
       "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-      "outputPath": "E:\\Projects\\HSPA\\WebAPI\\obj\\",
+      "outputPath": "E:\\Projects\\HSPA App\\WebAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
