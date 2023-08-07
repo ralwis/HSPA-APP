@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
         }
 
         //Get cities
-        [HttpGet]
+        [HttpGet("cities")]
         [AllowAnonymous]
         public async Task<IActionResult> GetCities()
         {

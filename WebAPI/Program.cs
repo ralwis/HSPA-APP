@@ -62,6 +62,9 @@ app.UseCors(myOrigins);
 app.ConfigureExceptionHandler(app.Environment);
 //app.ConfigureBuiltinExceptionHandler(app.Environment);
 
+app.UseHsts();
+app.UseHttpsRedirection();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
