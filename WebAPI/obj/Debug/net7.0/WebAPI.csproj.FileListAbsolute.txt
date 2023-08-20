@@ -162,3 +162,4 @@ E:\Projects\HSPA App\WebAPI\obj\Debug\net7.0\refint\WebAPI.dll
 E:\Projects\HSPA App\WebAPI\obj\Debug\net7.0\WebAPI.pdb
 E:\Projects\HSPA App\WebAPI\obj\Debug\net7.0\WebAPI.genruntimeconfig.cache
 E:\Projects\HSPA App\WebAPI\obj\Debug\net7.0\ref\WebAPI.dll
+E:\Projects\HSPA App\WebAPI\bin\Debug\net7.0\CloudinaryDotNet.dll

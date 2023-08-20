@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -18,13 +18,16 @@ import { PropertyDetailComponent } from './property/property-detail/property-det
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserLoginComponent } from './user/user-login/user-login.component';
 import { UserRegisterComponent } from './user/user-register/user-register.component';
-import { UserServiceService } from './services/user-service.service';
 import { AlertifyService } from './services/alertify.service';
 import { AuthService } from './services/auth.service';
 import { PropertyDetailResolverService } from './property/property-detail/property-detail-resolver.service';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { FilterPipe } from './Pipes/filter.pipe';
 import { SortPipe } from './Pipes/sort.pipe';
+import { HttpErrorInterceptorService } from './services/httperror-interceptor.service';
+import { DatePipe } from '@angular/common';
+import { PhotoEditorComponent } from './property/photo-editor/photo-editor.component';
+import { FileUploadModule } from 'ng2-file-upload';
 
 const appRoutes: Routes = [
   {path:'', component: PropertyListComponent},
@@ -49,7 +52,8 @@ const appRoutes: Routes = [
     UserLoginComponent,
     UserRegisterComponent,
     FilterPipe,
-    SortPipe
+    SortPipe,
+    PhotoEditorComponent
    ],
   imports: [
     BrowserModule,
@@ -63,10 +67,16 @@ const appRoutes: Routes = [
     ButtonsModule,
     BsDatepickerModule,
     NgxGalleryModule,
+    FileUploadModule
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptorService,
+      multi: true
+    },
+    DatePipe,
     HousingService,
-    UserServiceService,
     AlertifyService,
     AuthService,
     PropertyDetailResolverService

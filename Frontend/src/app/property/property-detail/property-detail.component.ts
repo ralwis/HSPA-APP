@@ -11,6 +11,7 @@ import { HousingService } from 'src/app/services/housing.service';
 })
 export class PropertyDetailComponent implements OnInit {
   public propertyId!: number;
+  public mainPhotoUrl: string = '';
   property = new Property();
   galleryOptions!: NgxGalleryOptions[];
   galleryImages!: NgxGalleryImage[];
@@ -25,8 +26,11 @@ export class PropertyDetailComponent implements OnInit {
     this.route.data.subscribe(
       (data: Property | any) => {
         this.property = data['prp'];
+        console.log(this.property.photos);
       }
-    )
+    );
+
+    this.property.age = this.housingService.getPropertyAge(this.property.estPossessionOn!);
 
     // this.route.params.subscribe(
     //   (params) => {
@@ -49,38 +53,33 @@ export class PropertyDetailComponent implements OnInit {
       }
     ];
 
-    this.galleryImages = [
-      {
-        small: 'assets/images/internal-1.jpg',
-        medium: 'assets/images/internal-1.jpg',
-        big: 'assets/images/internal-1.jpg'
-      },
-      {
-        small: 'assets/images/internal-2.jpg',
-        medium: 'assets/images/internal-2.jpg',
-        big: 'assets/images/internal-2.jpg'
-      },
-      {
-        small: 'assets/images/internal-3.jpg',
-        medium: 'assets/images/internal-3.jpg',
-        big: 'assets/images/internal-3.jpg'
-      },{
-        small: 'assets/images/internal-4.jpg',
-        medium: 'assets/images/internal-4.jpg',
-        big: 'assets/images/internal-4.jpg'
-      },
-      {
-        small: 'assets/images/internal-5.jpg',
-        medium: 'assets/images/internal-5.jpg',
-        big: 'assets/images/internal-5.jpg'
-      },
-      {
-        small: 'assets/images/internal-6.jpg',
-        medium: 'assets/images/internal-6.jpg',
-        big: 'assets/images/internal-6.jpg'
-      }
-    ];
+    this.galleryImages = this.getPropertyPhotos();
 
+  }
+
+  changePrimaryPhoto(mainPhotoUrl: string){
+    this.mainPhotoUrl = mainPhotoUrl;
+  }
+
+  getPropertyPhotos(): NgxGalleryImage[]{
+    const photoUrls : NgxGalleryImage[] = [];
+    if (this.property && this.property.photos){
+      for(const photo of this.property.photos){
+        if(photo.isPrimary) {
+          this.mainPhotoUrl = photo.imageUrl;
+        }
+        else{
+          photoUrls.push(
+            {
+              small: photo.imageUrl,
+              medium: photo.imageUrl,
+              big: photo.imageUrl
+            }
+          );
+        }
+      }
+    }
+    return photoUrls;
   }
 
 }

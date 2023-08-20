@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { Router } from '@angular/router';
+import { UserForLogin } from 'src/app/model/user';
 
 @Component({
   selector: 'app-user-login',
@@ -20,15 +21,17 @@ export class UserLoginComponent implements OnInit {
   }
 
   onLogin(loginForm: NgForm){
-    console.log(loginForm);
-    const token = this.authService.authUser(loginForm.value);
-    if(token){
-      localStorage.setItem('token', token.userName)
-      this.alertify.success('Login Success');
-      this.router.navigate(['/']);
-    }else{
-      this.alertify.error('User not exist')
-    }
+    console.log(loginForm.value);
+    this.authService.authUser(loginForm.value).subscribe(
+      (response: any) => {
+        console.log(response);
+        const user = response;
+        localStorage.setItem('token', user.token);
+        localStorage.setItem('userName', user.userName)
+        this.alertify.success('Login Success');
+        this.router.navigate(['/']);
+      }
+    )
   }
 
 }

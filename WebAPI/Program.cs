@@ -12,7 +12,7 @@ using WebAPI.Extensions;
 using WebAPI.Helpers;
 using WebAPI.Interfaces;
 using WebAPI.Middlewares;
-
+using WebAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +27,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 });
 
 // Add services to the container.
-var myOrigins = "_myOrigins";
+/*var myOrigins = "_myOrigins";
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: myOrigins,
@@ -35,8 +35,7 @@ builder.Services.AddCors(options =>
         {
             policy.WithOrigins("http://localhost:4200");
         });
-});
-
+});*/
 
 
 var secretKey = builder.Configuration.GetSection("AppSettings:Key").Value;
@@ -62,9 +61,24 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IPhotoService, PhotoService>();
+
+//CORS Setting
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularOrigins",
+    builder =>
+    {
+        builder.WithOrigins(
+                            "http://localhost:4200"
+                            )
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
-app.UseCors(myOrigins);
+app.UseCors("AllowAngularOrigins");
 
 // Configure the HTTP request pipeline.
 app.ConfigureExceptionHandler(app.Environment);
